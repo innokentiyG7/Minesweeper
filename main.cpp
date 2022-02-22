@@ -7,12 +7,12 @@ int main()
 {
 	srand(time(0));
 	RenderWindow app(VideoMode(400, 400), "Minesweeper");
-	int width = 32;//ширина клетки
+	int width = 32;
 	int gridLogic[12][12];
 	int gridView[12][12];
 	int mines_found = 0;
 	bool end_game = false;
-	int N = 12; //кол-во мин
+	int N = 12;
 	int mines = N;
 	int M = N;
 	int flags = N;
@@ -21,7 +21,6 @@ int main()
 	buffer1.loadFromFile("audio/pick.ogg");
 	buffer2.loadFromFile("audio/win.ogg");
 	Sound sound;
-	// Загрузка текстуры и создание спрайта
 	Texture texture;
 	texture.loadFromFile("images/image.jpg");
 	Sprite s(texture);
@@ -37,7 +36,6 @@ int main()
 			else gridLogic[i][j] = 0;
 		}
 	}
-	// Подсчет мин вокруг каждой клетки	
 	for (int i = 1; i <= 10; i++)
 		for (int j = 1; j <= 10; j++)
 		{
@@ -60,18 +58,18 @@ int main()
 		while (app.waitEvent(e))
 		{	
 			if (end_game) {
-				RenderWindow end(VideoMode(360, 60), "Game Over!");             //Создаём новое окошко
-				Font font;                                                      //Новый шрифт
-				font.loadFromFile("C:\\Windows\\Fonts\\Calibrib.ttf");          //передаем нашему шрифту файл шрифта
+				RenderWindow end(VideoMode(360, 60), "Game Over!");
+				Font font;
+				font.loadFromFile("C:\\Windows\\Fonts\\Calibrib.ttf");
 
 				while (end.isOpen())
 				{
-					Text text("", font, 25);                                    //Создаём два текста
+					Text text("", font, 25);                                   
 					Text record("", font, 25);
-					if (mines_found != mines) { text.setString("The game is over! You lost!"); }              //Если нашли все мины, то победа. В противном случае поражение:)
+					if (mines_found != mines) { text.setString("The game is over! You lost!"); }           
 
 
-					record.setString("Bombs found " + std::to_string(mines_found) + " from " + std::to_string(mines) + "!");                        //Записываем в текст, сколько мин из возможных было найдено
+					record.setString("Bombs found " + std::to_string(mines_found) + " from " + std::to_string(mines) + "!");                        
 
 					text.setFillColor(Color::Black);
 					text.setPosition(Vector2f(10, 5));
@@ -125,13 +123,13 @@ int main()
 						if (gridView[x][y] == 10) {
 							sound.setBuffer(buffer1);
 							sound.play();
-							int random = 1 + rand() % 2;                                //Генерируем случайный диапазон (от 1го до 3х) выскрытия случайых полей
-							for (int s = x - random; s <= x + random; s++)              //Цикл для вскрытия случайных полей
+							int random = 1 + rand() % 2;                                
+							for (int s = x - random; s <= x + random; s++)             
 							{
 								for (int d = y - random; d <= y + random; d++)
 								{
-									int n = 1 + rand() % 4;                             //Вероятность вскрытия поля составляет 25%
-									if (n == 1 && gridLogic[s][d] != 9) gridView[s][d] = gridLogic[s][d];       //Проверяем на бомбу. Если её нет, открываем поле
+									int n = 1 + rand() % 4;                            
+									if (n == 1 && gridLogic[s][d] != 9) gridView[s][d] = gridLogic[s][d];      
 									n = 0;
 								}
 							}
@@ -153,18 +151,18 @@ int main()
 					}
 					sound.setBuffer(buffer2);
 					sound.play();
-					RenderWindow end(VideoMode(360, 60), "Game Over!");             //Создаём новое окошко
-					Font font;                                                      //Новый шрифт
-					font.loadFromFile("C:\\Windows\\Fonts\\Calibrib.ttf");          //передаем нашему шрифту файл шрифта
+					RenderWindow end(VideoMode(360, 60), "Game Over!");             
+					Font font;                                                      
+					font.loadFromFile("C:\\Windows\\Fonts\\Calibrib.ttf");         
 
 					while (end.isOpen())
 					{
-						Text text("", font, 25);                                    //Создаём два текста
+						Text text("", font, 25);                                    
 						Text record("", font, 25);
 						text.setString("The game is over! You win!");
 						
 
-						record.setString("Bombs found " + std::to_string(mines_found) + " from " + std::to_string(mines) + "!");                        //Записываем в текст, сколько мин из возможных было найдено
+						record.setString("Bombs found " + std::to_string(mines_found) + " from " + std::to_string(mines) + "!");                       
 
 						text.setFillColor(Color::Black);
 						text.setPosition(Vector2f(10, 5));
